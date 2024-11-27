@@ -166,3 +166,74 @@ a.secondary {
     filter: invert();
   }
 }
+
+.eventDetailContainer {
+  display: flex;
+  min-height: 100vh;
+  padding: 20px;
+  gap: 40px;
+}
+
+.imageSection {
+  flex: 1;
+  position: relative;
+  height: 100vh;
+}
+
+.detailsSection {
+  flex: 1;
+  padding: 20px;
+}
+
+.eventName {
+  font-size: 2.5rem;
+  margin-bottom: 30px;
+  color: #333;
+}
+
+.eventInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.infoItem {
+  font-size: 1.1rem;
+  padding: 10px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.infoItem label {
+  font-weight: 600;
+  color: #555;
+}
+
+.actionButtons {
+  margin-top: 40px;
+  display: flex;
+  gap: 20px;
+}
+
+.interestedBtn, .getCodeBtn {
+  padding: 12px 24px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.interestedBtn {
+  background-color: #007bff;
+  color: white;
+}
+
+.getCodeBtn {
+  background-color: #28a745;
+  color: white;
+}
+
+.interestedBtn:hover, .getCodeBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}

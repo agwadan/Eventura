@@ -1,0 +1,16 @@
+.card {
+  background-color: white; /* Card background color */
+  border: 1px solid #ddd; /* Card border */
+  border-radius: 8px; /* Rounded corners */
+  /* Padding inside the card */
+  margin: 10px; /* Margin around the card */
+  width: 200px; /* Fixed width for the card */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  display: flex; /* Use flexbox for layout */
+  flex-direction: column; /* Stack items vertically */
+  align-items: center; /* Center items horizontally */
+}
+
+.card img {
+  border-radius: 8px; /* Rounded corners for the image */
+}

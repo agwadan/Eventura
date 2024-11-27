@@ -37,7 +37,7 @@ function EventDetail() {
 
           <div className={styles.infoItem}>
             <p>Category: Beach</p><br/>
-            <p>Click <strong>Get code</strong> to get  a 20% discount</p>
+            <p>Click <strong>Pay here</strong> to get  a 20% discount</p>
           </div>
         </div>
 
@@ -45,11 +45,11 @@ function EventDetail() {
           <button className={styles.interestedBtn}>
             Interested
           </button>
-          {/* 
+          
           <button className={styles.getCodeBtn}>
-            Get Code
+            Pay here
           </button>
-           */}
+           
         </div>
       </div>
     </div>

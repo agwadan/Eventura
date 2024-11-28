@@ -1,0 +1,22 @@
+.gridContainer {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* Two equal columns */
+  height: 100vh; /* Full height */
+}
+
+.imageContainer {
+  position: relative; /* Required for Next.js Image component */
+}
+
+.textContainer {
+  display: flex;
+  color: yellow;
+  flex-direction: column;
+  justify-content: center; /* Center content vertically */
+  align-items: center; /* Center content horizontally */
+  padding: 20px; /* Add some padding */
+}
+
+.heading {
+  color: yellow;
+}

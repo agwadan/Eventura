@@ -2,7 +2,11 @@
 import Image from "next/image";
 import styles from "./page.module.css";
 
+import LoginPage from "@/loginpage/pages";
+
+
 import SignUp from "./signuppage/page";
+
 
 import EventCard from "../components/EventCard";
 import { useState, useEffect } from "react";
@@ -118,8 +122,6 @@ export default function Home() {
           <EventCard key={index} event={event} />
         ))}
       </div>
-
-
     </>
   );
 }

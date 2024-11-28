@@ -1,81 +1,136 @@
 "use client";
-import Image from "next/image";
-import styles from "./page.module.css";
-
-import LoginPage from "@/loginpage/pages";
-
-
-import SignUp from "./signuppage/page";
-
-
-import EventCard from "../components/EventCard";
 import { useState, useEffect } from "react";
 import Link from "next/link";
-
+import { useRouter } from "next/navigation"; // Import useRouter
+import styles from "./page.module.css";
+import EventCard from "../components/EventCard";
+import Image from "next/image";
 
 export default function Home() {
   const [events, setEvents] = useState([]);
+  const [categories, setCategories] = useState([]); // State for categories
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [searchTerm, setSearchTerm] = useState("");
+  const [menuOpen, setMenuOpen] = useState(false); // State for hamburger menu
+  const [searchQuery, setSearchQuery] = useState(""); // State for search query
 
   const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+  const router = useRouter(); // Initialize useRouter
 
+  // Load cached search query from localStorage
   useEffect(() => {
-    const fetchEvents = async () => {
-      const token =
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzMyNzM3MzM2LCJleHAiOjE3MzUzMjkzMzZ9.G1ymtCNq05XmiDYPvngzjxxTtIC_9WNqMjuCo9Z0NdQ"; // Or wherever you're storing the token
-      try {
-        const response = await fetch(
-          "http://localhost:1337/api/events?populate=flyers",
-          {
-            method: "GET",
-            headers: {
-              Authorization: `Bearer ${token}`, // Add the Authorization header
-              "Content-Type": "application/json",
-            },
-          }
-        );
+    const cachedQuery = localStorage.getItem("cachedSearchQuery");
+    if (cachedQuery) {
+      setSearchQuery(cachedQuery); // Pre-fill search query with cached value
+    }
 
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
+    // Fetch events after setting initial state
+    const fetchEvents = async () => {
+      const token = localStorage.getItem("authToken");
+      try {
+        const response = await fetch(`${apiUrl}/api/events?populate=flyers`, {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        });
+        if (!response.ok) throw new Error("Network response was not ok");
         const data = await response.json();
-        console.log("====================================");
-        console.log(data);
-        console.log("====================================");
         setEvents(data.data);
       } catch (error) {
         console.error("Error fetching events:", error);
       }
     };
 
+    // Fetch categories from the backend
+    const fetchCategories = async () => {
+      const token = localStorage.getItem("authToken");
+      try {
+        const response = await fetch(`${apiUrl}/api/categories`, {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        });
+        if (!response.ok) throw new Error("Network response was not ok");
+        const data = await response.json();
+        setCategories(data.data); // Set the categories
+      } catch (error) {
+        console.error("Error fetching categories:", error);
+      }
+    };
+
     fetchEvents();
+    fetchCategories();
   }, []);
 
-  const nextEvent = () => {
-    setCurrentIndex((prevIndex) => (prevIndex + 1) % events.length);
-  };
-
-  const prevEvent = () => {
-    setCurrentIndex(
-      (prevIndex) => (prevIndex - 1 + events.length) % events.length
-    );
-  };
+  const nextEvent = () => setCurrentIndex((prev) => (prev + 1) % events.length);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      nextEvent();
-    }, 5000);
-
+    const interval = setInterval(nextEvent, 5000);
     return () => clearInterval(interval);
   }, [events.length]);
 
+  const handleSearchSubmit = async (e) => {
+    if (e.key === "Enter" && searchQuery.trim()) {
+      // Cache the search query in localStorage
+      localStorage.setItem("cachedSearchQuery", searchQuery);
+
+      // Navigate to the search results page
+      router.push(`/event-list?query=${searchQuery}`);
+    }
+  };
+
   return (
     <>
+      {/* Navbar */}
+      <nav className={styles.navbar}>
+        <div className={styles.navContent}>
+          <h1 className={styles.brandName}>Eventura</h1>
 
+          {/* Search Bar */}
+          <div className={styles.searchBarContainer}>
+            <input
+              type="text"
+              placeholder="Search events..."
+              className={styles.searchBar}
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              onKeyDown={handleSearchSubmit} // Trigger on Enter key
+            />
+          </div>
 
+          {/* Toggle menu to "See More" when the menu is open */}
+          <div
+            className={styles.hamburger}
+            onClick={() => setMenuOpen(!menuOpen)}
+          >
+            {menuOpen ? (
+              <span className={styles.seeMore}>See Less</span> // Display "See Less" when open
+            ) : (
+              <span className={styles.seeMore}>See More</span> // Display "See More" when closed
+            )}
+          </div>
+        </div>
+
+        {menuOpen && (
+          <div className={styles.dropdownMenu}>
+            {/* Map through the categories and display them */}
+            {categories.map((category) => (
+              <Link
+                key={category.id}
+                href={`/events?category=${category.name}`}
+              >
+                {category.name}
+              </Link>
+            ))}
+          </div>
+        )}
+      </nav>
+
+      {/* Carousel Section */}
       <div className={styles.gridContainer}>
-        {/* ==== Left Half ==== */}
         <div className={styles.imageContainer}>
           <div
             className={styles.imageWrapper}
@@ -85,7 +140,7 @@ export default function Home() {
               <div key={index} className={styles.imageSlide}>
                 <Link href={`/event-detail?eventId=${event.documentId}`}>
                   <Image
-                    src={`${apiUrl}${event?.flyers[0].url}`}
+                    src={`${apiUrl}${event.flyers[0]?.url}`}
                     alt={event.name}
                     width={500}
                     height={500}
@@ -104,19 +159,12 @@ export default function Home() {
               <p>
                 <i>{events[currentIndex].tag_line}</i>
               </p>
-              {/*   <div className={styles.buttonContainer}>
-                <button className={styles.button} onClick={prevEvent}>
-                  Previous
-                </button>
-                <button className={styles.button} onClick={nextEvent}>
-                  Next
-                </button>
-              </div> */}
             </>
           )}
         </div>
       </div>
 
+      {/* Event Cards */}
       <div className={styles.cardContainer}>
         {events.map((event, index) => (
           <EventCard key={index} event={event} />

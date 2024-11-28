@@ -1,0 +1,58 @@
+/* Example styles for mobile-first design */
+
+/* Navbar */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  background-color: #333;
+}
+
+.searchBarContainer {
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+  margin-right: 10px;
+}
+
+.searchBar {
+  padding: 8px;
+  border-radius: 4px;
+  margin-bottom: 8px;
+}
+
+.searchButton {
+  padding: 8px;
+  background-color: #ff5733;
+  color: white;
+  border: none;
+  border-radius: 4px;
+}
+
+.hamburger {
+  display: none; /* Hide on desktop */
+}
+
+/* Event Cards */
+.cardContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+@media (min-width: 768px) {
+  /* Styles for larger screens */
+  .searchBarContainer {
+    flex-direction: row;
+    width: auto;
+  }
+
+  .hamburger {
+    display: block;
+  }
+
+  .cardContainer {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+}

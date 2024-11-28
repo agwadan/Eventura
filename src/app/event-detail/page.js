@@ -76,6 +76,7 @@ function EventDetail() {
   return (
     <div className={styles.eventDetailContainer}>
       <div className={styles.imageSection}>
+
         {event?.flyers?.[0]?.url && (
           <Image
             src={`${apiUrl}${event.flyers[0].url}`}
@@ -85,6 +86,7 @@ function EventDetail() {
             priority
           />
         )}
+
       </div>
 
       <div className={styles.detailsSection}>

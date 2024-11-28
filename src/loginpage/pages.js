@@ -44,57 +44,63 @@ export default function LoginPage() {
 
   return (
     <div className={styles.container}>
-      <div className={styles.formWrapper}>
-        <div>
-          <h2 className={styles.title}>
-            Login into your account
-          </h2>
+      <div className={styles.eventuraTitle}>Eventura</div>
+      <div className={styles.loginBox}>
+        <div className="text-center mb-8">
+          
         </div>
-        <form className={styles.form} onSubmit={handleSubmit}>
-          <div className={styles.inputGroup}>
-            <div>
-              <label htmlFor="email" className={styles.srOnly}>Email address</label>
-              <input
-                id="email"
-                name="email"
-                type="email"
-                required
-                className={styles.inputTop}
-                placeholder="Email address"
-                value={formData.email}
-                onChange={handleChange}
-              />
-            </div>
-            <div>
-              <label htmlFor="password" className={styles.srOnly}>Password</label>
-              <input
-                id="password"
-                name="password"
-                type="password"
-                required
-                className={styles.inputBottom}
-                placeholder="Password"
-                value={formData.password}
-                onChange={handleChange}
-              />
-            </div>
-          </div>
-
-          {error && (
-            <div className={styles.error}>
-              {error}
-            </div>
-          )}
-
+        <div className={styles.formWrapper}>
           <div>
-            <button
-              type="submit"
-              className={styles.submitButton}
-            >
-              Login
-            </button>
+            <h2 className={styles.title}>
+              Login into your account
+            </h2>
           </div>
-        </form>
+          <form className={styles.form} onSubmit={handleSubmit}>
+            <div className={styles.inputGroup}>
+              <div>
+                <label htmlFor="email" className={styles.srOnly}>Email address</label>
+                <input
+                  id="email"
+                  name="email"
+                  type="email"
+                  required
+                  className={styles.inputTop}
+                  placeholder="Email address"
+                  value={formData.email}
+                  onChange={handleChange}
+                />
+              </div>
+              <div>
+                <label htmlFor="password" className={styles.srOnly}>Password</label>
+                <input
+                  id="password"
+                  name="password"
+                  type="password"
+                  required
+                  className={styles.inputBottom}
+                  placeholder="Password"
+                  value={formData.password}
+                  onChange={handleChange}
+                />
+              </div>
+            </div>
+
+            {error && (
+              <div className={styles.error}>
+                {error}
+              </div>
+            )}
+
+            <div>
+              <button
+                type="submit"
+                className={styles.submitButton}
+              >
+                Login
+              </button>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
   );

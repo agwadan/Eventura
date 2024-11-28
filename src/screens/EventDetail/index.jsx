@@ -1,30 +1,26 @@
-"use client";
 import React, { useState, useEffect, Suspense } from "react";
-import Image from "next/image";
-import { useSearchParams } from "next/navigation";
-import styles from "./page.module.css";
+import { useParams } from "react-router-dom";
+import styles from "./EventDetail.module.css";
 
 function EventDetail() {
-  const searchParams = useSearchParams();
-  const eventId = searchParams.get("eventId");
-  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
-
   const [isClient, setIsClient] = useState(false);
   const [event, setEvent] = useState(null);
   const [loading, setLoading] = useState(true);
   const [isSaved, setIsSaved] = useState(false);
 
-  // Consolidate useEffect hooks
+  const apiUrl = "http://localhost:1337"; // Use environment variable for React
+
+  const { eventId } = useParams();
+  console.log("====================================");
+  console.log(eventId);
+  console.log("====================================");
   useEffect(() => {
     setIsClient(true);
 
     if (eventId) {
       const fetchEventDetail = async () => {
         try {
-          const token =
-            typeof window !== "undefined"
-              ? localStorage.getItem("authToken")
-              : null;
+          const token = localStorage.getItem("authToken");
           const response = await fetch(
             `${apiUrl}/api/events/${eventId}?populate[0]=flyers&populate[1]=categories`,
             {
@@ -41,10 +37,13 @@ function EventDetail() {
           }
 
           const data = await response.json();
+          console.log("====================================");
+          console.log(data);
+          console.log("====================================");
           setEvent(data.data);
-          setLoading(false);
         } catch (error) {
           console.error("Error fetching event:", error);
+        } finally {
           setLoading(false);
         }
       };
@@ -53,7 +52,6 @@ function EventDetail() {
     }
   }, [eventId, apiUrl]);
 
-  // Share functionality
   const handleShare = () => {
     const shareUrl = `${window.location.origin}/event-detail?eventId=${eventId}`;
 
@@ -97,18 +95,16 @@ function EventDetail() {
       <div className={styles.eventDetailContainer}>
         <div className={styles.imageSection}>
           {event?.flyers?.[0]?.url && (
-            <Image
+            <img
               src={`${apiUrl}${event.flyers[0].url}`}
               alt={event.name}
-              fill
-              style={{ objectFit: "cover" }}
-              priority
+              style={{ objectFit: "cover", width: "100%", height: "auto" }}
             />
           )}
         </div>
 
         <div className={styles.detailsSection}>
-          <h1 className={`${styles.eventName} eventura`}>{event.name}</h1>
+          <h1 className={styles.eventName}>{event.name}</h1>
 
           <div className={styles.eventInfo}>
             <div className={styles.infoItem}>
@@ -131,7 +127,7 @@ function EventDetail() {
               </label>
             </div>
             <div className={styles.infoItem}>
-              <p>Category: {event.categories[0].name || "Not specified"}</p>
+              <p>Category: {event.categories[0]?.name || "Not specified"}</p>
               {event.discount && (
                 <p>
                   Click <strong>Pay here</strong> to get a {event.discount}%
@@ -148,7 +144,6 @@ function EventDetail() {
             <button className={styles.getCodeBtn}>Pay here</button>
           </div>
 
-          {/* Share Button */}
           <div className={styles.shareButtonContainer}>
             <button onClick={handleShare} className={styles.shareBtn}>
               Share Event

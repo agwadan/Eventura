@@ -1,15 +1,8 @@
-# Eventura
+# React + Vite
 
-## Git Commands
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-- Create a new branch - `git checkout -b <name-of-new-branch>`
-- Move from one branch to another - `git checkout <branch-name-you're-moving-to>`
+Currently, two official plugins are available:
 
-### Making changes
-
-- Add all changes made - `git add .`
-- Committing changes - `git commit -m "<commit message>"`
-- Push changes to remote repo - `git push`
-- Checking staged changes - `git status`
-
-###
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh

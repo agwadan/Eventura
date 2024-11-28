@@ -1,22 +1,22 @@
-"use client";
 import React, { useState } from "react";
-import { useRouter } from "next/navigation"; // Use the router from Next.js
-import styles from "./page.module.css";
+import { useNavigate, Link } from "react-router-dom"; // Import useNavigate and Link
+import styles from "./SignUp.module.css"; // Update the import to reflect your file structure
 
-function Login() {
-  const [identifier, setIdentifier] = useState(""); // Identifier can be username or email
+function SignUp() {
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const router = useRouter(); // Initialize the router
+  const navigate = useNavigate(); // Initialize useNavigate
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     setError(null); // Clear any previous errors
 
-    const apiUrl = "http://localhost:1337/api/auth/local"; // Strapi login endpoint
+    const apiUrl = "http://localhost:1337/api/auth/local/register"; // Strapi signup endpoint
 
     try {
       const response = await fetch(apiUrl, {
@@ -25,7 +25,8 @@ function Login() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          identifier, // Can be email or username
+          username,
+          email,
           password,
         }),
       });
@@ -33,19 +34,19 @@ function Login() {
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.error?.message || "Login failed");
+        throw new Error(data.error?.message || "Signup failed");
       }
 
       // Store the token in localStorage
       localStorage.setItem("authToken", data.jwt);
 
-      console.log("Login successful:", data);
+      console.log("Signup successful:", data);
 
       // Redirect to the home page
-      router.push("/");
+      navigate("/");
     } catch (error) {
       setError(error.message);
-      console.error("Error during login:", error);
+      console.error("Error during signup:", error);
     } finally {
       setLoading(false);
     }
@@ -54,17 +55,29 @@ function Login() {
   return (
     <div className={styles.signupContainer}>
       <div className={styles.formWrapper}>
-        <h1 className={`${styles.title} eventura`}>Login</h1>
+        <h1 className={`${styles.title} eventura`}>Create Account</h1>
 
         <form onSubmit={handleSubmit} className={styles.signupForm}>
           <div className={styles.inputGroup}>
-            <label htmlFor="identifier">Username or Email</label>
+            <label htmlFor="username">Username</label>
             <input
               type="text"
-              id="identifier"
-              placeholder="Enter your username or email"
-              value={identifier}
-              onChange={(e) => setIdentifier(e.target.value)}
+              id="username"
+              placeholder="Enter your username"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              required
+            />
+          </div>
+
+          <div className={styles.inputGroup}>
+            <label htmlFor="email">Email</label>
+            <input
+              type="email"
+              id="email"
+              placeholder="Enter your email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               required
             />
           </div>
@@ -74,7 +87,7 @@ function Login() {
             <input
               type="password"
               id="password"
-              placeholder="Enter your password"
+              placeholder="Create a password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
@@ -86,18 +99,18 @@ function Login() {
             className={styles.signupButton}
             disabled={loading}
           >
-            {loading ? "Logging In..." : "Log In"}
+            {loading ? "Signing Up..." : "Sign Up"}
           </button>
         </form>
 
         {error && <p className={styles.error}>{error}</p>}
 
         <p className={styles.loginLink}>
-          Don't have an account? <a href="/signup">Sign up here</a>
+          Already have an account? <Link to="/login">Login here</Link>
         </p>
       </div>
     </div>
   );
 }
 
-export default Login;
+export default SignUp;

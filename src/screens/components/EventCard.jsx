@@ -3,7 +3,7 @@ import styles from "./EventCard.module.css";
 import Link from "next/link";
 
 const EventCard = ({ event }) => {
-  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+  const apiUrl = "http://localhost:1337";
 
   console.log("====================================");
   console.log(event);

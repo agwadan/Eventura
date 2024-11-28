@@ -113,7 +113,8 @@
   gap: 20px;
 }
 
-.interestedBtn, .getCodeBtn {
+.interestedBtn,
+.getCodeBtn {
   padding: 12px 24px;
   border: none;
   border-radius: 8px;
@@ -132,7 +133,41 @@
   color: white;
 }
 
-.interestedBtn:hover, .getCodeBtn:hover {
+.interestedBtn:hover,
+.getCodeBtn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* In your page.module.css */
+.searchBar {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 16px;
+  font-size: 16px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+}
+
+.gridContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.imageContainer {
+  width: 60%;
+  padding: 20px;
+}
+
+.textContainer {
+  width: 40%;
+  padding: 20px;
+}
+
+.cardContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding: 20px;
 }

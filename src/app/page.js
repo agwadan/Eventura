@@ -1,75 +1,48 @@
 "use client";
-import Image from "next/image"; // Ensure the import is correct
+import Image from "next/image";
 import styles from "./page.module.css";
-import EventCard from "../components/EventCard"; // Import the EventCard component
-import { useState, useEffect } from "react"; // Import useState and useEffect
-
-const events = [
-  {
-    name: "Carol Nantongo Live in Concert",
-    tagline: "Tugende mu kikade.",
-    category: "Music",
-    image: "/images/carol-nantongo.jpg",
-  },
-  {
-    name: "Pearl Rhythm",
-    tagline: "Don't miss this amazing show!",
-    image: "/images/pearl-rhythm.jpg",
-    category: "Festival",
-  },
-  {
-    name: "Carol Nantongo Live in Concert",
-    tagline: "Tugende mu kikade.",
-    category: "Music",
-    image: "/images/carol-nantongo.jpg",
-  },
-  {
-    name: "Pearl Rhythm",
-    tagline: "Don't miss this amazing show!",
-    image: "/images/pearl-rhythm.jpg",
-    category: "Festival",
-  },
-  {
-    name: "Carol Nantongo Live in Concert",
-    tagline: "Tugende mu kikade.",
-    category: "Music",
-    image: "/images/carol-nantongo.jpg",
-  },
-  {
-    name: "Pearl Rhythm",
-    tagline: "Don't miss this amazing show!",
-    image: "/images/pearl-rhythm.jpg",
-    category: "Festival",
-  },
-  {
-    name: "Carol Nantongo Live in Concert",
-    tagline: "Tugende mu kikade.",
-    category: "Music",
-    image: "/images/carol-nantongo.jpg",
-  },
-  {
-    name: "Pearl Rhythm",
-    tagline: "Don't miss this amazing show!",
-    image: "/images/pearl-rhythm.jpg",
-    category: "Festival",
-  },
-  {
-    name: "Carol Nantongo Live in Concert",
-    tagline: "Tugende mu kikade.",
-    category: "Music",
-    image: "/images/carol-nantongo.jpg",
-  },
-  {
-    name: "Pearl Rhythm",
-    tagline: "Don't miss this amazing show!",
-    image: "/images/pearl-rhythm.jpg",
-    category: "Festival",
-  },
-  // Add more events as needed
-];
+import EventCard from "../components/EventCard";
+import { useState, useEffect } from "react";
+import Link from "next/link";
 
 export default function Home() {
+  const [events, setEvents] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+
+  useEffect(() => {
+    const fetchEvents = async () => {
+      const token =
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzMyNzM3MzM2LCJleHAiOjE3MzUzMjkzMzZ9.G1ymtCNq05XmiDYPvngzjxxTtIC_9WNqMjuCo9Z0NdQ"; // Or wherever you're storing the token
+      try {
+        const response = await fetch(
+          "http://localhost:1337/api/events?populate=flyers",
+          {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${token}`, // Add the Authorization header
+              "Content-Type": "application/json",
+            },
+          }
+        );
+
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        const data = await response.json();
+        console.log("====================================");
+        console.log(data);
+        console.log("====================================");
+        setEvents(data.data);
+      } catch (error) {
+        console.error("Error fetching events:", error);
+      }
+    };
+
+    fetchEvents();
+  }, []);
 
   const nextEvent = () => {
     setCurrentIndex((prevIndex) => (prevIndex + 1) % events.length);
@@ -81,18 +54,18 @@ export default function Home() {
     );
   };
 
-  // Autoscroll functionality
   useEffect(() => {
     const interval = setInterval(() => {
-      nextEvent(); // Automatically go to the next event
-    }, 5000); // Change event every 5 seconds
+      nextEvent();
+    }, 5000);
 
-    return () => clearInterval(interval); // Cleanup interval on component unmount
-  }, []);
+    return () => clearInterval(interval);
+  }, [events.length]);
 
   return (
     <>
       <div className={styles.gridContainer}>
+        {/* ==== Left Half ==== */}
         <div className={styles.imageContainer}>
           <div
             className={styles.imageWrapper}
@@ -100,42 +73,44 @@ export default function Home() {
           >
             {events.map((event, index) => (
               <div key={index} className={styles.imageSlide}>
-                <Image
-                  src={event.image}
-                  alt={event.name}
-                  width={500}
-                  height={500}
-                  objectFit="cover"
-                  style={{ borderRadius: 16 }}
-                />
+                <Link href={`/event-detail?eventId=${event.documentId}`}>
+                  <Image
+                    src={`${apiUrl}${event?.flyers[0].url}`}
+                    alt={event.name}
+                    width={500}
+                    height={500}
+                    objectFit="cover"
+                    style={{ borderRadius: 16 }}
+                  />
+                </Link>
               </div>
             ))}
           </div>
         </div>
         <div className={styles.textContainer}>
-          <h1>{events[currentIndex].name}</h1>
-          <p style={{ marginTop: 12 }}>
-            <i>{events[currentIndex].tagline}</i>
-          </p>
-          {/* <div className={styles.buttonContainer}>
-            <button className={styles.button} onClick={prevEvent}>
-              Previous
-            </button>
-            <button className={styles.button} onClick={nextEvent}>
-              Next
-            </button>
-          </div> */}
+          {events.length > 0 && (
+            <>
+              <h1>{events[currentIndex].name}</h1>
+              <p>
+                <i>{events[currentIndex].tag_line}</i>
+              </p>
+              {/*   <div className={styles.buttonContainer}>
+                <button className={styles.button} onClick={prevEvent}>
+                  Previous
+                </button>
+                <button className={styles.button} onClick={nextEvent}>
+                  Next
+                </button>
+              </div> */}
+            </>
+          )}
         </div>
       </div>
 
-      {/* New section for event cards */}
-      <div style={{ marginTop: 60 }}>
-        <h2 style={{ textAlign: "center" }}>Upcoming Events</h2>
-        <div className={styles.cardContainer}>
-          {events.map((event, index) => (
-            <EventCard key={index} event={event} />
-          ))}
-        </div>
+      <div className={styles.cardContainer}>
+        {events.map((event, index) => (
+          <EventCard key={index} event={event} />
+        ))}
       </div>
     </>
   );

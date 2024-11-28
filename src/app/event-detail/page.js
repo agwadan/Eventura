@@ -21,7 +21,10 @@ function EventDetail() {
     if (eventId) {
       const fetchEventDetail = async () => {
         try {
-          const token = localStorage.getItem("authToken");
+          const token =
+            typeof window !== "undefined"
+              ? localStorage.getItem("authToken")
+              : null;
           const response = await fetch(
             `${apiUrl}/api/events/${eventId}?populate[0]=flyers&populate[1]=categories`,
             {

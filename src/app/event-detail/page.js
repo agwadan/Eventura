@@ -9,9 +9,11 @@ function EventDetail() {
         <Image    
           src="/images/beach.jpg" 
           alt="Event-poster"
-          fill
+          width={800}
+          height={500}
           style={{ objectFit: 'cover' }}
           priority
+          className={styles.responsiveImage}
         />
       </div>
 

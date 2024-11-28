@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Suspense } from "react";
 import Image from "next/image";
 import { useSearchParams } from "next/navigation";
 import styles from "./page.module.css";
@@ -12,18 +12,16 @@ function EventDetail() {
   const [isClient, setIsClient] = useState(false);
   const [event, setEvent] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [isSaved, setIsSaved] = useState(false);
 
   // Consolidate useEffect hooks
   useEffect(() => {
-    // Set client-side rendering flag
     setIsClient(true);
 
-    // Fetch event details
     if (eventId) {
       const fetchEventDetail = async () => {
         try {
-          const token =
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzMyNzM3MzM2LCJleHAiOjE3MzUzMjkzMzZ9.G1ymtCNq05XmiDYPvngzjxxTtIC_9WNqMjuCo9Z0NdQ";
+          const token = localStorage.getItem("authToken");
           const response = await fetch(
             `${apiUrl}/api/events/${eventId}?populate[0]=flyers&populate[1]=categories`,
             {
@@ -40,10 +38,6 @@ function EventDetail() {
           }
 
           const data = await response.json();
-
-          console.log("====================================");
-          console.log(data);
-          console.log("====================================");
           setEvent(data.data);
           setLoading(false);
         } catch (error) {
@@ -56,7 +50,29 @@ function EventDetail() {
     }
   }, [eventId, apiUrl]);
 
-  // Early return for loading and error states
+  // Share functionality
+  const handleShare = () => {
+    const shareUrl = `${window.location.origin}/event-detail?eventId=${eventId}`;
+
+    if (navigator.share) {
+      navigator
+        .share({
+          title: event?.name || "Event",
+          text: `Check out this event: ${event?.name || "Event Details"}`,
+          url: shareUrl,
+        })
+        .then(() => console.log("Shared successfully"))
+        .catch((error) => console.error("Error sharing:", error));
+    } else {
+      navigator.clipboard.writeText(shareUrl);
+      alert("Event link copied to clipboard!");
+    }
+  };
+
+  const handleSaveClick = () => {
+    setIsSaved((prev) => !prev);
+  };
+
   if (!isClient) {
     return <div>Loading...</div>;
   }
@@ -74,69 +90,70 @@ function EventDetail() {
   }
 
   return (
-    <div className={styles.eventDetailContainer}>
-      <div className={styles.imageSection}>
+    <Suspense fallback={<div>Loading...</div>}>
+      <div className={styles.eventDetailContainer}>
+        <div className={styles.imageSection}>
+          {event?.flyers?.[0]?.url && (
+            <Image
+              src={`${apiUrl}${event.flyers[0].url}`}
+              alt={event.name}
+              fill
+              style={{ objectFit: "cover" }}
+              priority
+            />
+          )}
+        </div>
 
-        {event?.flyers?.[0]?.url && (
-          <Image
-            src={`${apiUrl}${event.flyers[0].url}`}
-            alt={event.name}
-            fill
-            style={{ objectFit: "cover" }}
-            priority
-          />
-        )}
+        <div className={styles.detailsSection}>
+          <h1 className={`${styles.eventName} eventura`}>{event.name}</h1>
 
-      </div>
-
-      <div className={styles.detailsSection}>
-        <h1 className={`${styles.eventName} eventura`}>{event.name}</h1>
-
-        <div className={styles.eventInfo}>
-          {/* <div className={styles.infoItem}>
-            <label>Venue: {event.venue || "Unknown Venue"}</label>
-          </div> */}
-
-          <div className={styles.infoItem}>
-            <label>
-              Fee: {event.price ? `UGX. ${event.price}` : "Not specified"}
-            </label>
-          </div>
-
-          <div className={styles.infoItem}>
-            <p>
-              Date:{" "}
-              {new Date(event.start_date).toLocaleDateString() ||
-                "Not specified"}
-            </p>
-          </div>
-
-          <div className={styles.infoItem}>
-            <label>
-              Time:{" "}
-              {new Date(event.start_date).toLocaleTimeString() ||
-                "Not specified"}
-            </label>
-          </div>
-
-          <div className={styles.infoItem}>
-            <p>Category: {event.categories[0].name || "Not specified"}</p>
-            <br />
-            {event.discount && (
+          <div className={styles.eventInfo}>
+            <div className={styles.infoItem}>
+              <label>
+                Fee: {event.price ? `UGX. ${event.price}` : "Not specified"}
+              </label>
+            </div>
+            <div className={styles.infoItem}>
               <p>
-                Click <strong>Pay here</strong> to get a {event.discount}%
-                discount
+                Date:{" "}
+                {new Date(event.start_date).toLocaleDateString() ||
+                  "Not specified"}
               </p>
-            )}
+            </div>
+            <div className={styles.infoItem}>
+              <label>
+                Time:{" "}
+                {new Date(event.start_date).toLocaleTimeString() ||
+                  "Not specified"}
+              </label>
+            </div>
+            <div className={styles.infoItem}>
+              <p>Category: {event.categories[0].name || "Not specified"}</p>
+              {event.discount && (
+                <p>
+                  Click <strong>Pay here</strong> to get a {event.discount}%
+                  discount
+                </p>
+              )}
+            </div>
+          </div>
+
+          <div className={styles.actionButtons}>
+            <button className={styles.interestedBtn} onClick={handleSaveClick}>
+              {isSaved ? "Saved" : "Interested"}
+            </button>
+            <button className={styles.getCodeBtn}>Pay here</button>
+          </div>
+
+          {/* Share Button */}
+          <div className={styles.shareButtonContainer}>
+            <button onClick={handleShare} className={styles.shareBtn}>
+              Share Event
+            </button>
           </div>
         </div>
-
-        <div className={styles.actionButtons}>
-          <button className={styles.interestedBtn}>Interested</button>
-          <button className={styles.getCodeBtn}>Pay here</button>
-        </div>
       </div>
-    </div>
+    </Suspense>
   );
 }
 

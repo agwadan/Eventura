@@ -1,58 +1,53 @@
-/* Example styles for mobile-first design */
-
-/* Navbar */
-.navbar {
-  display: flex;
-  justify-content: space-between;
-  padding: 10px;
-  background-color: #333;
-}
-
-.searchBarContainer {
+/* Container for the entire page */
+.pageContainer {
   display: flex;
   flex-direction: column;
-  width: 80%;
-  margin-right: 10px;
+  align-items: center;
+  padding: 16px;
+  font-family: Arial, sans-serif;
+  background-color: #f9f9f9;
+  min-height: 100vh;
 }
 
-.searchBar {
-  padding: 8px;
-  border-radius: 4px;
-  margin-bottom: 8px;
+/* Page title */
+.pageContainer h1 {
+  font-size: 20px;
+  color: #333;
+  text-align: center;
+  margin-bottom: 16px;
 }
 
-.searchButton {
-  padding: 8px;
-  background-color: #ff5733;
-  color: white;
-  border: none;
-  border-radius: 4px;
+/* Loading text or "No events" message */
+.pageContainer p {
+  font-size: 16px;
+  color: #666;
+  text-align: center;
 }
 
-.hamburger {
-  display: none; /* Hide on desktop */
-}
-
-/* Event Cards */
+/* Container for the event cards */
 .cardContainer {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  width: 100%;
+  max-width: 400px; /* Limit max width for larger devices */
 }
 
-@media (min-width: 768px) {
-  /* Styles for larger screens */
-  .searchBarContainer {
-    flex-direction: row;
-    width: auto;
+/* Media query for tablets and larger screens */
+@media (min-width: 600px) {
+  .cardContainer {
+    grid-template-columns: repeat(2, 1fr); /* 2 columns on tablets */
+    max-width: 600px;
   }
+}
 
-  .hamburger {
-    display: block;
+@media (min-width: 1024px) {
+  .pageContainer h1 {
+    font-size: 24px; /* Larger font for desktops */
   }
 
   .cardContainer {
-    flex-direction: row;
-    flex-wrap: wrap;
+    grid-template-columns: repeat(3, 1fr); /* 3 columns on desktops */
+    max-width: 900px;
   }
 }

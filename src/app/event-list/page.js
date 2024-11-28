@@ -14,7 +14,6 @@ export default function EventList() {
 
   // Extract the query from the URL
   useEffect(() => {
-    const query = new URLSearchParams(window.location.search).get("query");
     setSearchQuery(query);
 
     const fetchEvents = async () => {
@@ -22,7 +21,7 @@ export default function EventList() {
       const token = localStorage.getItem("authToken");
       try {
         const response = await fetch(
-          `${apiUrl}/api/events?populate=flyers&filters[name][$containsi]=${query}`,
+          `${apiUrl}/api/events?populate=flyers&filters[or][0][name][$containsi]=${query}&filters[or][1][categories.name][$containsi]=${query}`,
           {
             method: "GET",
             headers: {

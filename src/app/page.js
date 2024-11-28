@@ -53,8 +53,12 @@ export default function Home() {
             "Content-Type": "application/json",
           },
         });
+
         if (!response.ok) throw new Error("Network response was not ok");
         const data = await response.json();
+        console.log("====================================");
+        console.log(data);
+        console.log("====================================");
         setCategories(data.data); // Set the categories
       } catch (error) {
         console.error("Error fetching categories:", error);
@@ -118,12 +122,12 @@ export default function Home() {
           <div className={styles.dropdownMenu}>
             {/* Map through the categories and display them */}
             {categories.map((category) => (
-              <Link
+              <a
                 key={category.id}
-                href={`/events?category=${category.name}`}
+                onClick={() => handleCategoryClick(category.documentId)}
               >
                 {category.name}
-              </Link>
+              </a>
             ))}
           </div>
         )}

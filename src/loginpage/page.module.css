@@ -1,10 +1,52 @@
 .container {
-  min-height: 100vh;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  background-color: #f9fafb;
-  padding: 3rem 1rem;
+  min-height: 100vh;
+  background-color: #1CCED3;
+}
+
+.eventuraTitle {
+  font-size: 3rem;
+  font-weight: bold;
+  color: #397D7F;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.loginBox {
+  background: white;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 90%;
+  max-width: 400px;
+}
+
+/* Responsive styles */
+@media screen and (max-width: 768px) {
+  .eventuraTitle {
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .loginBox {
+    padding: 1.5rem;
+    width: 85%;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .eventuraTitle {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+  }
+
+  .loginBox {
+    padding: 1rem;
+    width: 90%;
+  }
 }
 
 .formWrapper {
@@ -88,14 +130,16 @@
   font-size: 0.875rem;
   font-weight: 500;
   color: white;
-  background-color: #4f46e5;
+  background-color: #5DE2E7;
   cursor: pointer;
   transition: background-color 0.2s;
   margin-top: 1.5rem;
 }
 
 .submitButton:hover {
-  background-color: #4338ca;
+  background-color: #397D7F;
+  filter: blur(0.5px);
+  transition: all 0.3s ease;
 }
 
 .submitButton:focus {
@@ -103,4 +147,41 @@
   ring: 2px;
   ring-offset: 2px;
   ring-color: #4f46e5;
+}
+
+.login-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background-color: #1CCED3;
+}
+
+.brand-name {
+  color: #397D7F;
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 2rem;
+}
+
+.login-form {
+  background: white;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+}
+
+/* Mobile responsiveness */
+@media screen and (max-width: 768px) {
+  .brand-name {
+    font-size: 2rem;
+  }
+
+  .login-form {
+    margin: 1rem;
+    padding: 1.5rem;
+  }
 }

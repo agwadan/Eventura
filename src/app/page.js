@@ -1,11 +1,11 @@
 import Image from "next/image";
 import styles from "./page.module.css";
-import EventDetail from "@/app/event-detail/page";
+import LoginPage from "@/loginpage/pages";
 
 export default function Home() {
   return (
     <>
-       <EventDetail/>
+       <LoginPage/>
     </>
   );
 }

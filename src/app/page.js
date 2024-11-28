@@ -1,9 +1,13 @@
 "use client";
 import Image from "next/image";
 import styles from "./page.module.css";
+
+import SignUp from "./signuppage/page";
+
 import EventCard from "../components/EventCard";
 import { useState, useEffect } from "react";
 import Link from "next/link";
+
 
 export default function Home() {
   const [events, setEvents] = useState([]);
@@ -64,6 +68,8 @@ export default function Home() {
 
   return (
     <>
+
+
       <div className={styles.gridContainer}>
         {/* ==== Left Half ==== */}
         <div className={styles.imageContainer}>
@@ -112,6 +118,8 @@ export default function Home() {
           <EventCard key={index} event={event} />
         ))}
       </div>
+
+
     </>
   );
 }

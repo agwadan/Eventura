@@ -1,16 +1,35 @@
+/* EventCard.module.css */
+
 .card {
-  background-color: white; /* Card background color */
-  border: 1px solid #ddd; /* Card border */
-  border-radius: 8px; /* Rounded corners */
-  /* Padding inside the card */
-  margin: 10px; /* Margin around the card */
-  width: 200px; /* Fixed width for the card */
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-  display: flex; /* Use flexbox for layout */
-  flex-direction: column; /* Stack items vertically */
-  align-items: center; /* Center items horizontally */
+  position: relative; /* Required for absolute positioning of the badge */
+  width: 200px;
+  height: 300px;
+  padding: 10px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-.card img {
-  border-radius: 8px; /* Rounded corners for the image */
+.badge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  padding: 5px 10px;
+  border-radius: 50px;
+  font-size: 14px;
+  color: white;
+  font-weight: bold;
+  text-transform: capitalize;
+  z-index: 10; /* Ensure the badge is on top */
+}
+
+.bronzeBadge {
+  background-color: #cd7f32; /* Bronze color */
+}
+
+.silverBadge {
+  background-color: #c0c0c0; /* Silver color */
+}
+
+.goldBadge {
+  background-color: #ffd700; /* Gold color */
 }

@@ -1,167 +1,96 @@
-.gridContainer {
-  display: grid;
-  grid-template-columns: 1fr 1fr; /* Two equal columns */
-  height: 100vh; /* Full height of the viewport */
-  background-color: #f0f0f0; /* Optional: Set a background color for the entire grid */
-}
-
-.imageContainer {
-  position: relative; /* Required for positioning */
-  overflow: hidden; /* Hide overflow to create a sliding effect */
-  height: 100%; /* Full height of the grid */
-  width: 100%; /* Full width of the left half */
-  display: flex; /* Use flexbox to center the image */
-  justify-content: center; /* Center horizontally */
-  align-items: center; /* Center vertically */
-}
-
-.imageWrapper {
-  display: flex; /* Use flexbox to arrange images in a row */
-  transition: transform 0.5s ease; /* Smooth transition for sliding effect */
-  height: 100%; /* Ensure the wrapper takes full height */
-}
-
-.imageSlide {
-  min-width: 100%; /* Each slide takes full width of the container */
-  height: 100%; /* Full height of the container */
-  display: flex; /* Center the image */
-  justify-content: center; /* Center horizontally */
-  align-items: center; /* Center vertically */
-  background-color: #d3d3d3; /* Grey background for the left half */
-}
-
-.textContainer {
-  display: flex;
-  flex-direction: column;
-  justify-content: center; /* Center content vertically */
-  align-items: center; /* Center content horizontally */
-  padding: 20px; /* Add some padding */
-}
-
-.buttonContainer {
-  display: flex;
-  justify-content: space-between; /* Space buttons evenly */
-  margin-top: 20px; /* Add some margin above the buttons */
-}
-
-.button {
-  /* Use a local class for buttons */
-  padding: 10px 20px; /* Add padding to buttons */
-  background-color: #0070f3; /* Button background color */
-  color: white; /* Button text color */
-  border: none; /* Remove border */
-  border-radius: 5px; /* Rounded corners */
-  cursor: pointer; /* Pointer cursor on hover */
-}
-
-.button:hover {
-  /* Use the local class for hover state */
-  background-color: #005bb5; /* Darker shade on hover */
-}
-
-.cardContainer {
-  display: flex; /* Use flexbox for layout */
-  flex-wrap: wrap; /* Allow wrapping of cards */
-  justify-content: center; /* Center cards horizontally */
-  padding: 20px; /* Add some padding around the container */
-}
-
-.eventDetailContainer {
-  display: flex;
-  min-height: 100vh;
-  padding: 20px;
-  gap: 40px;
-}
-
-.imageSection {
-  flex: 1;
-  position: relative;
-  height: 100vh;
-}
-
-.detailsSection {
-  flex: 1;
-  padding: 20px;
-}
-
-.eventName {
-  font-size: 2.5rem;
-  margin-bottom: 30px;
-  color: #333;
-}
-
-.eventInfo {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-.infoItem {
-  font-size: 1.1rem;
-  padding: 10px 0;
-  border-bottom: 1px solid #eee;
-}
-
-.infoItem label {
-  font-weight: 600;
-  color: #555;
-}
-
-.actionButtons {
-  margin-top: 40px;
-  display: flex;
-  gap: 20px;
-}
-
-.interestedBtn,
-.getCodeBtn {
-  padding: 12px 24px;
-  border: none;
-  border-radius: 8px;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.interestedBtn {
-  background-color: #007bff;
-  color: white;
-}
-
-.getCodeBtn {
-  background-color: #28a745;
-  color: white;
-}
-
-.interestedBtn:hover,
-.getCodeBtn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-/* In your page.module.css */
-.searchBar {
-  width: 100%;
-  padding: 10px;
-  margin-bottom: 16px;
-  font-size: 16px;
-  border-radius: 8px;
-  border: 1px solid #ddd;
-}
-
-.gridContainer {
+/* Navbar */
+.navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 10px 20px;
+  background-color: #32a899; /* Primary color */
+  color: #fff;
+}
+
+.navContent {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.brandName {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: white;
+}
+
+/* Container for search bar and button */
+.searchContainer {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.searchBar {
+  flex-grow: 1;
+  padding: 8px 10px;
+  border-radius: 5px;
+  border: none;
+  outline: none;
+  font-size: 1rem;
+  background-color: #fff;
+  color: #333;
+}
+
+.searchButton {
+  padding: 8px 16px;
+  background-color: #fff;
+  color: #32a899;
+  border: 1px solid #32a899;
+  border-radius: 5px;
+  margin-left: 10px;
+  cursor: pointer;
+}
+
+.searchButton:hover {
+  background-color: #32a899;
+  color: #fff;
+}
+
+.hamburger {
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  height: 20px;
+}
+
+.line {
+  width: 25px;
+  height: 3px;
+  background-color: white;
+}
+
+/* Styles for grid container */
+.gridContainer {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* Default two equal columns */
+  height: 100vh;
+  background-color: #f0f0f0;
 }
 
 .imageContainer {
-  width: 60%;
-  padding: 20px;
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .textContainer {
-  width: 40%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: left;
   padding: 20px;
 }
 
@@ -170,4 +99,109 @@
   flex-wrap: wrap;
   gap: 20px;
   padding: 20px;
+}
+
+/* Carousel Slide */
+.imageWrapper {
+  display: flex;
+  transition: transform 1s ease-in-out;
+}
+
+.imageSlide {
+  min-width: 100%;
+  max-width: 100%;
+  height: auto;
+}
+
+.imageContainer img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  border-radius: 16px;
+}
+
+/* Media Query for mobile screens */
+@media (max-width: 768px) {
+  /* Adjust grid layout to one column */
+  .gridContainer {
+    grid-template-columns: 1fr; /* One column */
+  }
+
+  .brandName {
+    display: none; /* Hide brand name on mobile */
+  }
+
+  /* Reduce height of the second grid child */
+  .imageContainer {
+    height: 40vh; /* Adjust this as necessary */
+  }
+
+  /* Adjust text container for mobile */
+  .textContainer {
+    padding: 10px;
+  }
+
+  .searchContainer {
+    width: 100%;
+    margin-top: 10px;
+  }
+
+  .searchBar {
+    width: 80%; /* Full width of the container */
+  }
+
+  /* Adjust event cards for mobile */
+  .cardContainer {
+    padding: 10px;
+    gap: 10px;
+  }
+
+  /* Adjust the hamburger menu */
+  .hamburger {
+    display: block;
+  }
+
+  .dropdownMenu {
+    position: absolute;
+    top: 60px;
+    left: 0;
+    background-color: #32a899;
+    width: 100%;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    z-index: 200;
+  }
+
+  .dropdownMenu a {
+    color: #fff;
+    padding: 10px;
+    text-decoration: none;
+  }
+
+  .dropdownMenu a:hover {
+    background-color: #28a085;
+  }
+}
+
+.seeMore {
+  cursor: pointer;
+  font-weight: bold;
+  color: #fff;
+  text-decoration: underline;
+}
+/* Media Query for tablet and small laptop screens */
+@media (max-width: 1024px) {
+  /* Adjust grid layout to two columns */
+  .gridContainer {
+    grid-template-columns: 1fr; /* Two columns for tablet screens */
+  }
+
+  .imageContainer {
+    height: 50vh;
+    /* Adjust the height for tablets */
+  }
+
+  .textContainer {
+  }
 }

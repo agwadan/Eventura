@@ -102,15 +102,32 @@ function EventDetail() {
   const handleSaveClick = async () => {
     setIsSaved((prev) => !prev);
 
-    // Increase like count on button click
+    // Update like count locally
     const updatedLikeCount = likeCount + 1;
-    setLikeCount(updatedLikeCount); // Update the frontend
+    setLikeCount(updatedLikeCount);
 
-    // Update the backend with the new like count
     try {
       const token = localStorage.getItem("authToken");
-      const userId = localStorage.getItem("userId"); // Assuming userId is stored in localStorage
-      const response = await fetch(`${apiUrl}/api/events/${eventId}`, {
+      const userInfo = localStorage.getItem("userData");
+
+      if (!userInfo) {
+        console.error("No user data found in localStorage");
+        return;
+      }
+
+      // Parse and extract userId
+      const userData = JSON.parse(userInfo);
+      const userId = userData.user?.id;
+
+      if (!userId) {
+        console.error("User ID not found in user data");
+        return;
+      }
+
+      console.log("User ID:", userId);
+
+      // 1. Update like count for the event
+      await fetch(`${apiUrl}/api/events/${eventId}`, {
         method: "PUT",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -123,24 +140,12 @@ function EventDetail() {
         }),
       });
 
-      if (!response.ok) {
-        throw new Error("Failed to update like count");
-      }
-
-      const data = await response.json();
-      console.log("Like count updated:", data);
-    } catch (error) {
-      console.error("Error updating like count:", error);
-    }
-
-    // Now, add the event to the user's events array
-    try {
-      // Fetch the user's data
-      const token = localStorage.getItem("authToken");
+      // 2. Fetch user's existing events
       const response = await fetch(`${apiUrl}/api/users/${userId}`, {
         method: "GET",
         headers: {
           Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
         },
       });
 
@@ -148,16 +153,27 @@ function EventDetail() {
         throw new Error("Failed to fetch user data");
       }
 
-      const userData = await response.json();
+      const userResponseData = await response.json();
+      const existingEvents = userResponseData.events || [];
 
-      // Check if the event is already in the user's events array
-      const eventAlreadySaved = userData.data.events.some(
+      // 3. Check if event is already saved
+      const eventAlreadySaved = existingEvents.some(
         (savedEvent) => savedEvent.id === eventId
       );
 
       if (!eventAlreadySaved) {
-        // Add event to user's events array
-        const updatedEvents = [...userData.data.events, { id: eventId }];
+        // 4. Add current event to user's events
+        const updatedEvents = [
+          ...existingEvents,
+          {
+            id: eventId,
+            name: event.name,
+            date: event.start_date,
+            category: event.categories[0]?.name || "Uncategorized",
+          },
+        ];
+
+        // 5. Update user events in backend
         const updateResponse = await fetch(`${apiUrl}/api/users/${userId}`, {
           method: "PUT",
           headers: {
@@ -165,9 +181,7 @@ function EventDetail() {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            data: {
-              events: updatedEvents,
-            },
+            events: updatedEvents,
           }),
         });
 
@@ -175,9 +189,12 @@ function EventDetail() {
           throw new Error("Failed to update user events");
         }
 
-        console.log("User events updated:", await updateResponse.json());
+        console.log(
+          "User events updated successfully:",
+          await updateResponse.json()
+        );
       } else {
-        console.log("Event is already in user's events list");
+        console.log("Event is already saved in user's events list.");
       }
     } catch (error) {
       console.error("Error updating user's events:", error);

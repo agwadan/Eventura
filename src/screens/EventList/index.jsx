@@ -82,7 +82,7 @@ export default function EventList() {
         {searchQuery
           ? `Search results for: ${searchQuery}`
           : categoryId
-          ? `Events in category: ${categoryId}`
+          ? `Events selected category`
           : "All events"}
       </h1>
 

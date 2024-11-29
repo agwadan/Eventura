@@ -35,8 +35,12 @@ function Login() {
         throw new Error(data.error?.message || "Login failed");
       }
 
-      // Store the token in localStorage
+      // Store the JWT token separately in localStorage
       localStorage.setItem("authToken", data.jwt);
+
+      // Store the rest of the response without the token
+      const { jwt, ...userData } = data;
+      localStorage.setItem("userData", JSON.stringify(userData));
 
       console.log("Login successful:", data);
 

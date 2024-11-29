@@ -57,6 +57,11 @@ function Login() {
   return (
     <div className={styles.signupContainer}>
       <div className={styles.formWrapper}>
+        <h1 style={{ 
+          color: '#397D7F', 
+          marginBottom: '20px',
+          textAlign: 'center' // Center the Eventura text
+        }}>Eventura</h1>
         <h1 className={`${styles.title} eventura`}>Login</h1>
 
         <form onSubmit={handleSubmit} className={styles.signupForm}>
@@ -88,6 +93,16 @@ function Login() {
             type="submit"
             className={styles.signupButton}
             disabled={loading}
+            style={{ 
+              backgroundColor: '#397D7F',
+              width: '150px',  // Make button smaller
+              margin: '0 auto', // Center the button
+              transition: 'opacity 0.3s ease', // Smooth opacity transition
+              opacity: 1,
+              ':hover': {
+                opacity: 0.8
+              }
+            }}
           >
             {loading ? "Logging In..." : "Log In"}
           </button>

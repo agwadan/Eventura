@@ -55,6 +55,7 @@ function SignUp() {
   return (
     <div className={styles.signupContainer}>
       <div className={styles.formWrapper}>
+        <h1 className={styles.brandName}>Eventura</h1>
         <h1 className={`${styles.title} eventura`}>Create Account</h1>
 
         <form onSubmit={handleSubmit} className={styles.signupForm}>

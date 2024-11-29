@@ -10,7 +10,7 @@ function EventDetail() {
   const [likeCount, setLikeCount] = useState(0); // Track like count locally
   const [shareCount, setShareCount] = useState(0); // Track share count locally
 
-  const apiUrl = "http://192.168.100.39:1337"; // Use environment variable for React
+  const apiUrl = "https://eventura-be.onrender.com"; // Use environment variable for React
 
   const { eventId } = useParams();
   useEffect(() => {

@@ -1,3 +1,13 @@
+/* Add these global styles at the top of your file */
+:global(body),
+:global(html) {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+}
+
 /* Navbar */
 .navbar {
   display: flex;
@@ -6,6 +16,10 @@
   padding: 10px 20px;
   background-color: #32a899; /* Primary color */
   color: #fff;
+  width: 100%;
+  margin: 0;
+  padding: 1rem;
+  box-sizing: border-box;
 }
 
 .navContent {
@@ -75,6 +89,10 @@
   grid-template-columns: 1fr 1fr; /* Default two equal columns */
   height: 100vh;
   background-color: #f0f0f0;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 .imageContainer {
@@ -100,6 +118,10 @@
   flex-wrap: wrap;
   gap: 20px;
   padding: 20px;
+  width: 100%;
+  margin: 0;
+  padding: 1rem;
+  box-sizing: border-box;
 }
 
 /* Carousel Slide */

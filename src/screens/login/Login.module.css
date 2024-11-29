@@ -54,7 +54,7 @@
 }
 
 .signupButton {
-  background-color: #007bff;
+  background-color: #397D7F;
   color: white;
   padding: 14px;
   border: none;
@@ -63,10 +63,15 @@
   cursor: pointer;
   transition: background-color 0.3s;
   margin-top: 10px;
+  width: 150px;
+  margin: 0 auto;
+  display: block;
+  transition: opacity 0.3s ease;
 }
 
 .signupButton:hover {
   background-color: #0056b3;
+  opacity: 0.8;
 }
 
 .loginLink {
@@ -82,4 +87,9 @@
 
 .loginLink a:hover {
   text-decoration: underline;
+}
+
+.eventuraTitle {
+  color: #397D7F;
+  margin-bottom: 20px;
 }

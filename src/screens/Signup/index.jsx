@@ -16,7 +16,7 @@ function SignUp() {
     setLoading(true);
     setError(null); // Clear any previous errors
 
-    const apiUrl = "http://localhost:1337/api/auth/local/register"; // Strapi signup endpoint
+    const apiUrl = "https://eventura-be.onrender.com/api/auth/local/register"; // Strapi signup endpoint
 
     try {
       const response = await fetch(apiUrl, {

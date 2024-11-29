@@ -13,6 +13,7 @@
   align-items: center;
   width: 100%;
   justify-content: space-between;
+  gap: 16px;
 }
 
 .brandName {
@@ -156,9 +157,9 @@
     gap: 10px;
   }
 
-  /* Adjust the hamburger menu */
+  /* Hamburger menu will always display now */
   .hamburger {
-    display: block;
+    display: flex; /* Ensure the hamburger is always displayed */
   }
 
   .dropdownMenu {
@@ -169,6 +170,7 @@
     width: 100%;
     padding: 10px;
     display: flex;
+    gap: 16px;
     flex-direction: column;
     z-index: 200;
   }
@@ -190,6 +192,7 @@
   color: #fff;
   text-decoration: underline;
 }
+
 /* Media Query for tablet and small laptop screens */
 @media (max-width: 1024px) {
   /* Adjust grid layout to two columns */
@@ -203,5 +206,6 @@
   }
 
   .textContainer {
+    /* No specific changes needed here */
   }
 }

@@ -1,7 +1,7 @@
 /* Card Container */
 .card {
   position: relative;
-  width: 100%;
+  width: 80;
   max-width: 250px;
   padding: 12px;
   background-color: white;
@@ -22,7 +22,8 @@
 }
 
 .eventImage {
-  border-radius: 8px;
+  border-radius: 13px;
+  width: 100%;
 }
 
 /* Title Container */
@@ -62,15 +63,15 @@
 
 /* Specific Badge Colors */
 .bronzeBadge {
-  background-color: #cd7f32;
+  background-color: #9f6225;
 }
 
 .silverBadge {
-  background-color: #c0c0c0;
+  background-color: #8f8e8e;
 }
 
 .goldBadge {
-  background-color: #ffd700;
+  background-color: #b59a02ec;
 }
 
 .gold {
@@ -82,7 +83,7 @@
 }
 
 .platinum {
-  background-color: #e5e4e2;
+  background-color: #3f3f3f;
 }
 
 /* Responsive Layout */

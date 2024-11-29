@@ -10,7 +10,7 @@ function EventDetail() {
   const [likeCount, setLikeCount] = useState(0); // Track like count locally
   const [shareCount, setShareCount] = useState(0); // Track share count locally
 
-  const apiUrl = "http://localhost:1337"; // Use environment variable for React
+  const apiUrl = "http://192.168.100.39:1337"; // Use environment variable for React
 
   const { eventId } = useParams();
   useEffect(() => {
@@ -268,7 +268,7 @@ function EventDetail() {
             <button className={styles.interestedBtn} onClick={handleSaveClick}>
               {isSaved ? "Saved" : "Interested"}
             </button>
-            <button className={styles.getCodeBtn}>Pay here</button>
+            {/*    <button className={styles.getCodeBtn}>Pay here</button> */}
           </div>
 
           <div className={styles.shareButtonContainer}>

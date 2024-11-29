@@ -11,7 +11,7 @@ export default function Home() {
   const [searchQuery, setSearchQuery] = useState("");
   const [loading, setLoading] = useState(true); // Loading state for events and categories
 
-  const apiUrl = "http://localhost:1337"; // Use environment variable for React
+  const apiUrl = "https://eventura-be.onrender.com"; // Use environment variable for React
   const navigate = useNavigate(); // React Router hook for navigation
 
   useEffect(() => {
@@ -124,7 +124,7 @@ export default function Home() {
               <a
                 key={category.id}
                 onClick={() => handleCategoryClick(category.documentId)} // Corrected category ID
-                style={{ cursor: "pointer" }}
+                style={{ cursor: "pointer", marginLeft: 12 }}
               >
                 {category.name}
               </a>

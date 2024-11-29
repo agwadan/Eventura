@@ -10,7 +10,7 @@ export default function EventList() {
   const [searchQuery, setSearchQuery] = useState("");
   const [categoryId, setCategoryId] = useState(""); // Add state to track categoryId
 
-  const apiUrl = "http://localhost:1337";
+  const apiUrl = "http://192.168.100.39:1337";
   const location = useLocation(); // Hook to access the current location (URL)
   const navigate = useNavigate(); // Hook for navigation
 
